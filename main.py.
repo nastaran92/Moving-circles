@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دایره متحرک</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // تنظیم اندازه کانواس
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // موقعیت و سرعت دایره
+        let x = canvas.width / 2;
+        let y = canvas.height / 2;
+        let radius = 30;
+        let speedX = 5;
+        let speedY = 5;
+
+        function draw() {
+            // پاک کردن کانواس
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // رسم دایره
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+            ctx.closePath();
+
+            // به‌روزرسانی موقعیت دایره
+            x += speedX;
+            y += speedY;
+
+            // برخورد با دیواره‌ها
+            if (x - radius < 0 || x + radius > canvas.width) {
+                speedX = -speedX;
+            }
+            if (y - radius < 0 || y + radius > canvas.height) {
+                speedY = -speedY;
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    </script>
+</body>
+</html>
